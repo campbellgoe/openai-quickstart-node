@@ -3,7 +3,7 @@ import { useState } from "react";
 import styles from "./index.module.css";
 
 export default function Home() {
-  const [animalInput, setAnimalInput] = useState("");
+  const [codeInput, setCodeInput] = useState("");
   const [result, setResult] = useState();
 
   async function onSubmit(event) {
@@ -14,7 +14,7 @@ export default function Home() {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ animal: animalInput }),
+        body: JSON.stringify({ code: codeInput }),
       });
 
       const data = await response.json();
@@ -23,7 +23,6 @@ export default function Home() {
       }
 
       setResult(data.result);
-      setAnimalInput("");
     } catch(error) {
       // Consider implementing your own error handling logic here
       console.error(error);
@@ -34,24 +33,24 @@ export default function Home() {
   return (
     <div>
       <Head>
-        <title>OpenAI Quickstart</title>
+        <title>Concise code</title>
         <link rel="icon" href="/dog.png" />
       </Head>
 
       <main className={styles.main}>
-        <img src="/dog.png" className={styles.icon} />
-        <h3>Name my pet</h3>
+        <img src="/code.png" className={styles.icon} />
+        <h3>Explain my code in a concise way</h3>
         <form onSubmit={onSubmit}>
-          <input
-            type="text"
-            name="animal"
-            placeholder="Enter an animal"
-            value={animalInput}
-            onChange={(e) => setAnimalInput(e.target.value)}
+          <textarea
+            className={styles.codeInput}
+            name="code"
+            placeholder="Paste code here"
+            value={codeInput}
+            onChange={(e) => setCodeInput(e.target.value)}
           />
-          <input type="submit" value="Generate names" />
+          <input type="submit" value="Explain my code" />
         </form>
-        <div className={styles.result}>{result}</div>
+        <pre className={styles.result}>{result}</pre>
       </main>
     </div>
   );
